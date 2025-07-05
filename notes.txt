@@ -1,0 +1,360 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import MainButton from "../buttons/MainButton"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+
+const MainContent = () => {
+  const navigate = useNavigate()
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    setIsLoaded(true)
+  }, [])
+
+  const token = localStorage.getItem("authToken")
+
+  const handleButtonClick = () => {
+    if (!token) {
+      navigate("/")
+      toast.error("Please login to access this feature")
+    }
+  }
+
+  return (
+    <main className="min-h-screen pt-5">
+      {/* Hero Section */}
+      <section className="relative min-h-screen max-w-7xl xl:max-w-9xl mx-auto w-full px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 md:py-16 flex items-center overflow-hidden">
+        {/* Subtle Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full blur-3xl opacity-20"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full blur-3xl opacity-20"></div>
+        </div>
+
+        {/* Main Content Container */}
+        <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 xl:gap-16 items-center">
+          {/* Background Text */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <h1 className="text-[4rem] xs:text-[5rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[12rem] 2xl:text-[14rem] font-black text-gray-800/5 sm:text-gray-800/10 uppercase leading-none select-none whitespace-nowrap">
+              AuraFits
+            </h1>
+          </div>
+
+          {/* Left Side - Text Content */}
+          <div className="flex flex-col justify-center order-2 lg:order-1">
+            <div className="relative">
+              {/* Clean Professional Card */}
+              <div className="relative shadow-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 transition-all duration-500">
+                {/* Content */}
+                <div className="relative">
+                  <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white leading-tight uppercase josefin-sans-title">
+                    {[
+                      { text: "The journey", delay: "0ms" },
+                      { text: "of a", delay: "200ms", highlight: true },
+                      { text: "thousand lifts", delay: "400ms" },
+                      { text: "begins with a", delay: "600ms" },
+                      { text: "single rep", delay: "800ms", highlight: true },
+                    ].map((line, index) => (
+                      <span
+                        key={index}
+                        className={`block transition-all duration-800 ease-out ${
+                          line.highlight ? "text-[#FFD700]" : ""
+                        }`}
+                        style={{
+                          transform: isLoaded ? "translateY(0)" : "translateY(20px)",
+                          opacity: isLoaded ? 1 : 0,
+                          transitionDelay: line.delay,
+                        }}
+                      >
+                        {line.text}
+                      </span>
+                    ))}
+                  </h1>
+
+                  {/* Professional Subtitle */}
+                  <p
+                    className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed transition-all duration-800 josefin-sans-title ease-out"
+                    style={{
+                      transform: isLoaded ? "translateY(0)" : "translateY(20px)",
+                      opacity: isLoaded ? 1 : 0,
+                      transitionDelay: "1000ms",
+                    }}
+                  >
+                    Transform your body and mind with our scientifically-proven fitness programs designed for lasting
+                    results.
+                  </p>
+
+                  {/* Clean Button */}
+                  <div
+                    onClick={() => handleButtonClick()}
+                    className="mt-6 sm:mt-8 transition-all duration-800 ease-out"
+                    style={{
+                      transform: isLoaded ? "translateY(0)" : "translateY(20px)",
+                      opacity: isLoaded ? 1 : 0,
+                      transitionDelay: "1200ms",
+                    }}
+                  >
+                    <MainButton text={"Start Your Journey with us"} />
+                  </div>
+                </div>
+
+                {/* Subtle Accent Lines */}
+                <div className="absolute top-0 left-4 sm:left-6 md:left-8 w-8 sm:w-12 md:w-16 h-px bg-gradient-to-r from-[#FFD700] to-transparent"></div>
+                <div className="absolute bottom-0 right-4 sm:right-6 md:right-8 w-8 sm:w-12 md:w-16 h-px bg-gradient-to-l from-[#FFD700] to-transparent"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side - Video Container */}
+          <div className="flex justify-center order-1 lg:order-2">
+            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-sm xl:max-w-md">
+              {/* Cyber Frame */}
+              <div className="relative p-2 sm:p-3 md:p-4 border-2 border-[#FFD700] rounded-xl sm:rounded-2xl shadow-[0_0_30px_rgba(255,215,0,0.4)] sm:shadow-[0_0_40px_rgba(255,215,0,0.5)] md:shadow-[0_0_50px_rgba(255,215,0,0.6)] overflow-hidden">
+                {/* Scanning Lines */}
+                <div className="absolute inset-0 pointer-events-none">
+                  <div className="absolute w-full h-px bg-[#FFD700] animate-scan-horizontal top-1/4"></div>
+                  <div
+                    className="absolute w-full h-px bg-[#FFF500] animate-scan-horizontal top-3/4"
+                    style={{ animationDelay: "1s" }}
+                  ></div>
+                  <div className="absolute w-px h-full bg-[#FFD700] animate-scan-vertical left-1/4"></div>
+                  <div
+                    className="absolute w-px h-full bg-[#FFF500] animate-scan-vertical left-3/4"
+                    style={{ animationDelay: "1.5s" }}
+                  ></div>
+                </div>
+
+                {/* Video Container */}
+                <div className="relative overflow-hidden rounded-lg sm:rounded-xl group">
+                  <video
+                    src="/assets/main-vid.mp4"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-auto aspect-[3/4] object-cover rounded-lg sm:rounded-xl transform transition-all duration-700 hover:scale-110 hover:brightness-125"
+                    style={{
+                      filter: "contrast(1.3) brightness(1.2) saturate(1.4) hue-rotate(10deg)",
+                    }}
+                  />
+
+                  {/* Cyber Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#FFD700]/20 via-transparent to-[#FFF500]/20 rounded-lg sm:rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                  {/* Glitch Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#FFD700]/10 to-transparent animate-glitch-overlay rounded-lg sm:rounded-xl"></div>
+                </div>
+
+                {/* Floating Cyber Stats */}
+                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 md:top-6 md:right-6 bg-black/90 backdrop-blur-sm rounded-md sm:rounded-lg p-2 sm:p-3 border border-[#FFD700] shadow-[0_0_15px_rgba(255,215,0,0.4)] sm:shadow-[0_0_20px_rgba(255,215,0,0.5)] animate-float-cyber">
+                  <div className="text-sm sm:text-base md:text-lg font-bold text-[#FFD700] animate-counter-up">98%</div>
+                  <div className="text-xs text-gray-300">POWER LEVEL</div>
+                </div>
+
+                <div
+                  className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 md:bottom-6 md:left-6 bg-black/90 backdrop-blur-sm rounded-md sm:rounded-lg p-2 sm:p-3 border border-[#FFF500] shadow-[0_0_15px_rgba(255,245,0,0.4)] sm:shadow-[0_0_20px_rgba(255,245,0,0.5)] animate-float-cyber"
+                  style={{ animationDelay: "1s" }}
+                >
+                  <div className="text-sm sm:text-base md:text-lg font-bold text-[#FFF500] animate-counter-up">
+                    10K+
+                  </div>
+                  <div className="text-xs text-gray-300">WARRIORS</div>
+                </div>
+
+                {/* Energy Particles */}
+                <div className="absolute inset-0 pointer-events-none">
+                  {[...Array(15)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="absolute w-0.5 h-0.5 sm:w-1 sm:h-1 bg-[#FFD700] rounded-full animate-energy-particle"
+                      style={{
+                        left: `${Math.random() * 100}%`,
+                        top: `${Math.random() * 100}%`,
+                        animationDelay: `${Math.random() * 3}s`,
+                        animationDuration: `${2 + Math.random() * 2}s`,
+                      }}
+                    ></div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Minimal Floating Elements */}
+        <div
+          className="absolute bottom-10 sm:bottom-16 md:bottom-20 right-10 sm:right-16 md:right-20 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#FFF500] rounded-full opacity-40 animate-pulse"
+          style={{ animationDelay: "1s" }}
+        ></div>
+        <div
+          className="absolute top-1/2 left-6 sm:left-8 md:left-10 w-1 h-1 bg-[#FFD700] rounded-full opacity-30 animate-pulse"
+          style={{ animationDelay: "2s" }}
+        ></div>
+
+        {/* Professional CSS */}
+        <style jsx>{`
+          .josefin-sans-title {
+            font-family: "Josefin Sans", sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+          }
+
+          /* Smooth transitions */
+          * {
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          }
+
+          /* Enhanced responsive typography */
+          @media (max-width: 480px) {
+            .josefin-sans-title {
+              line-height: 1.1;
+              letter-spacing: -0.01em;
+            }
+          }
+
+          @media (max-width: 640px) {
+            .josefin-sans-title {
+              line-height: 1.15;
+            }
+          }
+
+          @media (max-width: 768px) {
+            .josefin-sans-title {
+              font-size: 2rem;
+              line-height: 1.2;
+            }
+          }
+
+          /* Custom breakpoint for extra small screens */
+          @media (max-width: 360px) {
+            .josefin-sans-title {
+              font-size: 1.75rem;
+              line-height: 1.1;
+            }
+          }
+
+          /* Animation keyframes */
+          @keyframes scan-horizontal {
+            0% {
+              transform: translateX(-100%);
+              opacity: 0;
+            }
+            50% {
+              opacity: 1;
+            }
+            100% {
+              transform: translateX(100%);
+              opacity: 0;
+            }
+          }
+
+          @keyframes scan-vertical {
+            0% {
+              transform: translateY(-100%);
+              opacity: 0;
+            }
+            50% {
+              opacity: 1;
+            }
+            100% {
+              transform: translateY(100%);
+              opacity: 0;
+            }
+          }
+
+          @keyframes glitch-overlay {
+            0%,
+            100% {
+              transform: translateX(0);
+            }
+            20% {
+              transform: translateX(-2px);
+            }
+            40% {
+              transform: translateX(2px);
+            }
+            60% {
+              transform: translateX(-1px);
+            }
+            80% {
+              transform: translateX(1px);
+            }
+          }
+
+          @keyframes float-cyber {
+            0%,
+            100% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(-10px);
+            }
+          }
+
+          @keyframes counter-up {
+            0% {
+              opacity: 0;
+              transform: translateY(10px);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+
+          @keyframes energy-particle {
+            0% {
+              opacity: 0;
+              transform: scale(0);
+            }
+            50% {
+              opacity: 1;
+              transform: scale(1);
+            }
+            100% {
+              opacity: 0;
+              transform: scale(0) translateY(-20px);
+            }
+          }
+
+          .animate-scan-horizontal {
+            animation: scan-horizontal 3s infinite;
+          }
+
+          .animate-scan-vertical {
+            animation: scan-vertical 3s infinite;
+          }
+
+          .animate-glitch-overlay {
+            animation: glitch-overlay 2s infinite;
+          }
+
+          .animate-float-cyber {
+            animation: float-cyber 3s ease-in-out infinite;
+          }
+
+          .animate-counter-up {
+            animation: counter-up 1s ease-out;
+          }
+
+          .animate-energy-particle {
+            animation: energy-particle 3s infinite;
+          }
+
+          /* Responsive utilities */
+          @media (max-width: 475px) {
+            .xs\:text-3xl {
+              font-size: 1.875rem;
+            }
+            .xs\:text-5rem {
+              font-size: 5rem;
+            }
+          }
+        `}</style>
+      </section>
+    </main>
+  )
+}
+
+export default MainContent

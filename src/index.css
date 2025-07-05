@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.robo::placeholder {
+  font-family: "Roboto Flex", sans-serif;
+}
+
+.robo {
+  font-family: "Roboto Flex", sans-serif;
+}
+
+.instrument-san {
+  font-family: "Instrument Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+.josefin-sans-title {
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "bolkit";
+  src: url("/public/assets/Fonts/Bolkit.ttf") format("truetype");
+}
+
+.bolkit {
+  font-family: bolkit;
+}
+
+body {
+  background-color: #000 !important;
+}
+
+.poppins {
+  font-family: "Poppins", sans-serif;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.alice {
+  font-family: "Alice", serif;
+}
+
+.inter {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-optical-sizing: auto;
+}
+
+.roboto-flex {
+  font-family: "Roboto Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.metamorphous-regular {
+  font-family: "Metamorphous", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Add this CSS file and import it in your component or globally */
+
+/* Force black background for react-chatbotify */
+.chatbotify-container {
+  background-color: #000000 !important
+}
+
+.chatbotify-container * {
+  background-color: inherit;
+}
+
+/* Target specific chatbot elements */
+.rcb-chat-window {
+  background-color: #0c0c0cf4 !important;
+  opacity: 0.9 !important;
+}
+
+.rcb-chat-body {
+  background-color: #000000 !important;
+}
+
+.rcb-chat-message-container {
+  background-color: #000000 !important;
+}
+
+.rcb-chat-input-container {
+  background-color: #1f1f1f !important;
+}
+
+/* Bot messages */
+.rcb-bot-message {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* User messages */
+.rcb-user-message {
+  background-color: #f0f408f4 !important;
+  color: #070707 !important;
+}
+
+/* Options */
+.rcb-options-container button {
+  background-color: #1f1f1f !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+}
+
+.rcb-options-container button:hover {
+  background-color: #000000 !important;
+  color: #000000 !important;
+}
+
