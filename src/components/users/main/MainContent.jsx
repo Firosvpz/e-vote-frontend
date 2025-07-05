@@ -8,7 +8,7 @@ const MainContent = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
     const [currentWordIndex, setCurrentWordIndex] = useState(0)
 
-    const dynamicWords = ["Developer", "Designer", "Creator", "Innovator"]
+    const dynamicWords = ["Frontend Developer", "Backend Developer", "Figma Designer", "Innovator"]
     const skills = ["React", "JavaScript", "Node.js", "Python", "UI/UX", "MongoDB"]
 
     useEffect(() => {
