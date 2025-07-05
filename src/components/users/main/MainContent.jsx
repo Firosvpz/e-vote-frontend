@@ -144,7 +144,7 @@ const MainContent = () => {
                                 <div className="profile-image">
                                     <div className="image-placeholder overflow-hidden rounded-full w-32 h-32">
                                         <img
-                                            src="/public/assets/linkedin.jpg" // Replace with your image URL
+                                            src="/assets/linkedin.jpg" // Replace with your image URL
                                             alt="Profile"
                                             className="w-full h-full object-cover"
                                         />

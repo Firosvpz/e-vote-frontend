@@ -5,7 +5,7 @@ export const projects = [
         title: "LiveCare Consulation",
         description:
             "Developed a full-stack telehealth platform for senior citizens to book video consultations, manage appointments, and make secure payments",
-        image: "/public/assets/livecare.png",
+        image: "/assets/livecare.png",
         category: "Frontend",
         technologies: [ "React.js", "Redux", "TypeScript", "Tailwind CSS", "Node.js", "Express.js", "JWT", "Cloudinary,GCP", "Stripe"],
         liveUrl: "https://live-care-frontend-git-main-vpzfiroz-gmailcoms-projects.vercel.app/",
@@ -19,7 +19,7 @@ export const projects = [
         title: "AuraFits Gym Website",
         description:
             "Dynamic full-stack gym management platform with membership registration, trainer schedules, class bookings, and secure authentication. Features include real-time updates and an admin dashboard for managing users, trainers, and services.",
-        image: "/public/assets/aurafit.png",
+        image: "/assets/aurafit.png",
         category: "Full Stack",
         technologies: ["React.js", "Node js", "Express js", "MongoDB", "JWT", "Nodemailer", "Tailwind CSS"],
         liveUrl: "https://aura-fits-frontend-16bj.vercel.app/",
@@ -33,7 +33,7 @@ export const projects = [
         title: "Cozastore Ecommerce",
         description:
             " Built a dynamic e-commerce web app with features like product browsing, cart/wishlist management, and secure checkout using Razorpay.",
-        image: "/public/assets/cozastore.png",
+        image: "/assets/cozastore.png",
         category: "Full Stack",
         technologies: [ "JavaScript", "EJS", "HTML", "CSS", "Node.js", "Express.js", "MongoDB", "Razorpay", "AWS"],
         liveUrl: "https://coza-poes.onrender.com/",
