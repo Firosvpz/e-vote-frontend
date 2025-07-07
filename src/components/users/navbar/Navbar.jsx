@@ -93,7 +93,7 @@ export default function PortfolioNavbar() {
 
   // Handle resume download
   const handleResumeDownload = () => {
-    const resumeUrl = "/public/assets/firoz_resume.pdf"
+    const resumeUrl = "/assets/firoz_resume.pdf"
     const link = document.createElement("a")
     link.href = resumeUrl
     link.download = "Firos_resume.pdf"
