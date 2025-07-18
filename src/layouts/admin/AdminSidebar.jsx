@@ -96,7 +96,7 @@ export default function AdminSidebar() {
     };
 
     return (
-        <div className={`${isCollapsed ? "w-25" : "w-64"} transition-all duration-300 bg-black/30 backdrop-blur-md border-r border-white/20 flex flex-col`}>
+        <div className={`${isCollapsed ? "w-25" : "w-64"} transition-all duration-300 bg-black/30 backdrop-blur-md border-r border-white/20 flex flex-col `}>
             {/* Logo and Toggle */}
             <div className="p-6 border-b border-white/20">
                 <div className="flex items-center justify-between">
@@ -147,10 +147,8 @@ export default function AdminSidebar() {
                         </button>
                     ))}
                 </div>
-            </nav>
-
-            {/* User Profile */}
-            <div className="p-4 border-t border-white/20">
+                 {/* User Profile */}
+            <div className="p-4 border-t border-white/20  mt-10">
                 <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl flex items-center justify-center">
                         <span className="text-white font-bold text-sm">AD</span>
@@ -158,7 +156,7 @@ export default function AdminSidebar() {
                     {!isCollapsed && (
                         <div className="flex-1 min-w-0">
                             <div className="text-white font-medium text-sm">Admin User</div>
-                            <div className="text-white/60 text-xs">System Administrator</div>
+                            {/* <div className="text-white/60 text-xs">System Administrator</div> */}
                         </div>
                     )}
                     {!isCollapsed && (
@@ -170,6 +168,9 @@ export default function AdminSidebar() {
                     )}
                 </div>
             </div>
+            </nav>
+
+           
         </div>
     )
 }

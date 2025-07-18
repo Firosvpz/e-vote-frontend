@@ -1,8 +1,13 @@
 "use client"
 
 import UserNavbar from "../../layouts/user/UserNavbar"
+import { useEffect } from "react"
 
 export default function AboutPage() {
+
+  useEffect(()=>{
+     window.scrollTo(0, 0);
+  },[])
   const teamMembers = [
     {
       name: "Dr. Sarah Johnson",

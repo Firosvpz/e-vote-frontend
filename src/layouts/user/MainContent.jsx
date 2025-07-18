@@ -1,8 +1,47 @@
-import React, { useState } from "react";
-import VoteModal from "../../components/VoteModal";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import VoteModal from "../../components/user/VoteModal";
+import { getElections } from "../../api/user/userApi";
+import LoginUser from "../../components/user/LoginUser";
+
 
 const MainContent = () => {
+    const navigate = useNavigate()
     const [isVoteModalOpen, setIsVoteModalOpen] = useState(false);
+    const [elections, setElections] = useState([])
+    const [selectedElection, setSelectedElection] = useState(null)
+    const [showLoginModal, setShowLoginModal] = useState(false)
+
+    useEffect(() => {
+        const fetchElections = async () => {
+            try {
+                const response = await getElections()
+                setElections(response)
+            } catch (error) {
+                console.error('error occurred while fetch elections');
+            }
+        }
+        fetchElections()
+    }, [])
+
+
+
+
+    const formatDisplayDate = (isoString) => {
+        if (!isoString) return "N/A"
+        const date = new Date(isoString)
+        return date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        })
+    }
+
+    const handleVote = (election) => {
+        setSelectedElection(election)
+        setIsVoteModalOpen(true)
+    }
+
     return (
         <>
             {/* Hero Section */}
@@ -19,8 +58,8 @@ const MainContent = () => {
                         </p>
                         <div className="flex flex-col sm:flex-row gap-6 justify-center">
                             <button
-                            onClick={() => setIsVoteModalOpen(true)} 
-                            className="group bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105">
+                                onClick={() => navigate('/elections')}
+                                className="group bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105">
                                 <span className="flex items-center justify-center">
                                     Vote Now
                                     <svg
@@ -39,8 +78,8 @@ const MainContent = () => {
                                 </span>
                             </button>
                             <button
-                            onClick={() => window.location.href = "/results"}
-                             className="group bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 px-10 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105">
+                                onClick={() => window.location.href = "/results"}
+                                className="group bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 px-10 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105">
                                 View Results
                             </button>
                         </div>
@@ -55,7 +94,7 @@ const MainContent = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/20 text-center hover:bg-white/15 transition-all duration-300 transform hover:scale-105">
                             <div className="text-5xl font-black bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-3">
-                                2,847
+                                {elections?.eligibleVotersCount}
                             </div>
                             <div className="text-white/80 font-medium">Registered Voters</div>
                         </div>
@@ -69,7 +108,7 @@ const MainContent = () => {
                         </div>
                         <div className="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/20 text-center hover:bg-white/15 transition-all duration-300 transform hover:scale-105">
                             <div className="text-5xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent mb-3">
-                                12
+                                {elections?.statusCounts?.Active || 0}
                             </div>
                             <div className="text-white/80 font-medium">Active Elections</div>
                         </div>
@@ -194,49 +233,57 @@ const MainContent = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {/* Election 1 */}
-                        <div className="group bg-gradient-to-br from-cyan-500/20 to-blue-600/20 backdrop-blur-md p-8 rounded-3xl border border-cyan-500/30 hover:border-cyan-400/60 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20">
-                            <div className="flex justify-between items-start mb-6">
-                                <h3 className="text-2xl font-bold text-white">
-                                    Student Body President
-                                </h3>
-                                <span className="bg-gradient-to-r from-emerald-400 to-green-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-                                    LIVE
-                                </span>
-                            </div>
-                            <p className="text-white/80 mb-6 leading-relaxed">
-                                Shape your university's future by electing a leader who will
-                                champion student rights and drive meaningful change across
-                                campus.
-                            </p>
-                            <div className="flex justify-between items-center">
-                                <div className="text-sm text-cyan-300 font-medium">
-                                    Ends: March 15, 2024
-                                </div>
-                                <button
-                                    onClick={() => setIsVoteModalOpen(true)} 
-                                 className="group bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
-                                    <span className="flex items-center">
-                                        Vote Now
-                                        <svg
-                                            className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M13 7l5 5m0 0l-5 5m5-5H6"
-                                            />
-                                        </svg>
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
+                        {elections?.data?.map((election) => {
+
+                            if (election.status === "Active") {
+                                return (
+                                    <div key={election._id}
+                                        className="group bg-gradient-to-br from-cyan-500/20 to-blue-600/20 backdrop-blur-md p-8 rounded-3xl border border-cyan-500/30 hover:border-cyan-400/60 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20">
+                                        <div className="flex justify-between items-start mb-6">
+                                            <h3 className="text-2xl font-bold text-white">
+                                                {election?.title}
+                                            </h3>
+                                            <span className="bg-gradient-to-r from-emerald-400 to-green-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                                {election?.status}
+                                            </span>
+                                        </div>
+                                        <p className="text-white/80 mb-6 leading-relaxed">
+                                            {election?.description}
+                                        </p>
+                                        <div className="flex justify-between items-center">
+                                            <div className="text-sm text-cyan-300 font-medium">
+                                                Ends: {formatDisplayDate(election?.endDate)}
+                                            </div>
+                                            <button
+                                                onClick={() => handleVote(election)}
+                                                className="group bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
+                                                <span className="flex items-center">
+                                                    Vote Now
+                                                    <svg
+                                                        className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                                        />
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                )
+
+
+                            }
+                        })}
 
                         {/* Election 2 */}
-                        <div className="group bg-gradient-to-br from-emerald-500/20 to-green-600/20 backdrop-blur-md p-8 rounded-3xl border border-emerald-500/30 hover:border-emerald-400/60 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20">
+                        {/* <div className="group bg-gradient-to-br from-emerald-500/20 to-green-600/20 backdrop-blur-md p-8 rounded-3xl border border-emerald-500/30 hover:border-emerald-400/60 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20">
                             <div className="flex justify-between items-start mb-6">
                                 <h3 className="text-2xl font-bold text-white">
                                     Campus Sustainability Initiative
@@ -274,7 +321,7 @@ const MainContent = () => {
                                     </span>
                                 </button>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>
@@ -294,7 +341,9 @@ const MainContent = () => {
                         through democratic participation. Your voice matters.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                        <button className="group bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black px-10 py-4 rounded-2xl font-black text-lg shadow-2xl hover:shadow-yellow-500/25 transition-all duration-300 transform hover:scale-105">
+                        <button
+                            onClick={() => setShowLoginModal(true)}
+                            className="group bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black px-10 py-4 rounded-2xl font-black text-lg shadow-2xl hover:shadow-yellow-500/25 transition-all duration-300 transform hover:scale-105">
                             <span className="flex items-center justify-center">
                                 Create Account
                                 <svg
@@ -312,18 +361,22 @@ const MainContent = () => {
                                 </svg>
                             </span>
                         </button>
-                        <button className="group bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 px-10 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105">
+                        <button
+                            onClick={() => navigate('/about')}
+                            className="group bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 px-10 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105">
                             Learn More
                         </button>
                     </div>
                 </div>
             </section>
-            
+
 
             <VoteModal
                 isOpen={isVoteModalOpen}
                 onClose={() => setIsVoteModalOpen(false)}
+                election={selectedElection}
             />
+            <LoginUser isOpen={showLoginModal} onClose={()=>setShowLoginModal(false)} />
         </>
     );
 };

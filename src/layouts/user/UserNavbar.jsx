@@ -1,7 +1,41 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import LoginUser from "../../components/user/LoginUser";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import UserProfileModal from "../../components/user/UserProfileModal";
 
 const UserNavbar = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false)
+  const [showUserProfile, setShowUserProfile] = useState(false)
+  const userData = JSON.parse(localStorage.getItem("userData"));
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+    toast.success(`${userData?.name} logged out successfully`, {
+      style: {
+        background: 'transparent',
+        backdropFilter: 'blur(10px)',
+        color: '#ffffff',
+        borderRadius: '12px',
+        padding: '16px',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+        fontFamily: "'Inter', sans-serif",
+        fontSize: '16px',
+        fontWeight: 500,
+        border: '1px solid #333333',
+      },
+      icon: '⚠️',
+    })
+    navigate('/')
+  };
+
+
 
   return (
     <>
@@ -16,7 +50,9 @@ const UserNavbar = () => {
                   <span className="text-white font-bold text-xl">SV</span>
                 </div>
               </div>
-              <div className="ml-3">
+              <div
+                onClick={() => navigate('/')}
+                className="ml-3 cursor-pointer">
                 <h1 className="text-xl font-bold text-white">Student Vote</h1>
                 <p className="text-sm text-cyan-300">Democracy Reimagined</p>
               </div>
@@ -24,40 +60,78 @@ const UserNavbar = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-1">
-              <a
-                href="/"
+              <button
+                onClick={() => navigate('/')}
                 className="text-white/80 hover:text-white hover:bg-white/10 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200"
               >
                 Home
-              </a>
-              <a
-                href="/elections"
+              </button>
+              <button
+                onClick={() => navigate('/elections')}
                 className="text-white/80 hover:text-white hover:bg-white/10 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200"
               >
                 Elections
-              </a>
-              <a
-                href="/results"
+              </button>
+              <button
+                onClick={() => navigate('/results')}
                 className="text-white/80 hover:text-white hover:bg-white/10 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200"
               >
                 Results
-              </a>
-              <a
-                href="/about"
+              </button>
+              <button
+                onClick={() => navigate('/about')}
                 className="text-white/80 hover:text-white hover:bg-white/10 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200"
               >
                 About
-              </a>
+              </button>
             </nav>
 
             {/* Desktop Auth Buttons */}
             <div className="hidden md:flex items-center space-x-3">
-              <button className="text-white/80 hover:text-white px-4 py-2 text-sm font-medium transition-colors">
-                Login
-              </button>
-              <button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-2 rounded-xl text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-200">
-                Register
-              </button>
+              {userData ? (
+                <div className="relative">
+                  <div
+                    className="flex items-center space-x-2 cursor-pointer"
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                  >
+                    <span className="text-white text-sm font-medium">
+                      {userData?.name || 'User'}
+                    </span>
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700  flex items-center justify-center text-white text-xs font-bold">
+                      {userData?.name?.charAt(0) || 'U'}
+                    </div>
+                  </div>
+
+                  {dropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-40 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white  rounded-md shadow-lg z-50">
+                      <button
+                        className="block w-full text-left px-4 py-2 text-sm font-semibold text-white hover:bg-gray-100 hover:text-blue-700"
+                        onClick={() => {
+                          setDropdownOpen(false);
+                          setShowUserProfile(true)
+                        }}
+                      >
+                        Profile
+                      </button>
+                      <button
+                        className="block w-full text-left px-4 py-2 font-semibold text-sm text-white hover:bg-gray-100 hover:text-red-500 "
+                        onClick={() => {
+                          setDropdownOpen(false);
+                          handleLogout()
+                        }}
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button
+                  onClick={() => setShowLoginModal(true)}
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-2 rounded-xl text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-200">
+                  Login / Signup
+                </button>
+              )}
             </div>
 
             {/* Mobile menu button */}
@@ -84,46 +158,95 @@ const UserNavbar = () => {
           </div>
 
           {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <div className="md:hidden border-t border-white/20 py-4 bg-black/20 backdrop-blur-sm rounded-b-2xl mt-2">
+            {isMenuOpen && (
+            <div className="md:hidden absolute top-16 left-0 w-full border-t border-white/20 py-4 bg-black/90 backdrop-blur-sm rounded-b-2xl px-4">
               <div className="flex flex-col space-y-1">
-                <a
-                  href="#"
-                  className="text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 text-sm font-medium rounded-lg transition-colors"
+                <button
+                  onClick={() => {
+                    navigate("/")
+                    setIsMenuOpen(false)
+                  }}
+                  className="text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 text-sm font-medium rounded-lg transition-colors text-left w-full"
                 >
                   Home
-                </a>
-                <a
-                  href="#"
-                  className="text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 text-sm font-medium rounded-lg transition-colors"
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/elections")
+                    setIsMenuOpen(false)
+                  }}
+                  className="text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 text-sm font-medium rounded-lg transition-colors text-left w-full"
                 >
                   Elections
-                </a>
-                <a
-                  href="#"
-                  className="text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 text-sm font-medium rounded-lg transition-colors"
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/results")
+                    setIsMenuOpen(false)
+                  }}
+                  className="text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 text-sm font-medium rounded-lg transition-colors text-left w-full"
                 >
                   Results
-                </a>
-                <a
-                  href="#"
-                  className="text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 text-sm font-medium rounded-lg transition-colors"
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/about")
+                    setIsMenuOpen(false)
+                  }}
+                  className="text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 text-sm font-medium rounded-lg transition-colors text-left w-full"
                 >
                   About
-                </a>
+                </button>
                 <div className="flex flex-col space-y-2 pt-4 border-t border-white/20">
-                  <button className="text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 text-sm font-medium text-left rounded-lg transition-colors">
-                    Login
-                  </button>
-                  <button className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-4 py-3 rounded-xl text-sm font-medium shadow-lg">
-                    Register
-                  </button>
+                  {userData ? (
+                    <>
+                      {/* User Info in Mobile Menu */}
+                      <div className="flex items-center space-x-2 px-4 py-2">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold">
+                          {userData?.name?.charAt(0)?.toUpperCase() || "U"}
+                        </div>
+                        <span className="text-white text-sm font-medium">{userData?.name || "User"}</span>
+                      </div>
+                      {/* Profile Button in Mobile Menu */}
+                      <button
+                        className="block w-full text-left px-4 py-3 text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                        onClick={() => {
+                          setIsMenuOpen(false)
+                          setShowUserProfile(true)
+                        }}
+                      >
+                        Profile
+                      </button>
+                      {/* Logout Button in Mobile Menu */}
+                      <button
+                        className="block w-full text-left px-4 py-3 text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors text-red-400 "
+                        onClick={() => {
+                          setIsMenuOpen(false)
+                          handleLogout()
+                        }}
+                      >
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setShowLoginModal(true)
+                        setIsMenuOpen(false)
+                      }}
+                      className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-4 py-3 rounded-xl text-sm font-medium shadow-lg w-full text-center hover:from-cyan-600 hover:to-blue-700 transition-all duration-200"
+                    >
+                      Login / Signup
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
           )}
         </div>
       </header>
+      <LoginUser isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
+      <UserProfileModal isOpen={showUserProfile} onClose={() => setShowUserProfile(false)} />
     </>
   );
 };

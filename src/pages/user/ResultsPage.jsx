@@ -5,8 +5,9 @@ import UserNavbar from "../../layouts/user/UserNavbar"
 import UserResults from "../../layouts/user/UserResults"
 import UserFooter from "../../layouts/user/UserFooter"
 
-const ResultsPage=()=> {
-        const [isLive, setIsLive] = useState(true)
+const ResultsPage = () => {
+  const [isLive, setIsLive] = useState(true)
+
 
 
 
@@ -21,16 +22,16 @@ const ResultsPage=()=> {
     }
   }, [isLive])
 
- 
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Header */}
-    <UserNavbar/>
+      <UserNavbar />
 
-    <UserResults/>
+      <UserResults />
 
-    <UserFooter/>
+      <UserFooter />
     </div>
   )
 }
