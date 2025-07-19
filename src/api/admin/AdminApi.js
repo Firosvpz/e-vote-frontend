@@ -123,3 +123,4 @@ export const adminLogin = async (adminData) => {
     throw error;
   }
 }
+

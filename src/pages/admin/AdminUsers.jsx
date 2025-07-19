@@ -24,7 +24,7 @@ export default function AdminUsers() {
   const [totalUsers, setTotalUsers] = useState(0)
   const [verifiedUsers, setVerifiedUsers] = useState(0)
   const [unverifiedUsers, setUnverifiedUsers] = useState(0)
-  const [error, setError] = useState(null) // Added missing error state
+  const [error, setError] = useState(null) 
   const usersPerPage = 5
 
   useEffect(() => {
